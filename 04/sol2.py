@@ -2,8 +2,6 @@
 with open("input.txt","r") as fp:
     total = 0
     lines = fp.read().splitlines()
-    #for i in range(len(key)):
-    #    print(i, key[i])
     for x in lines:
         a,b = x.split(',')
         alow = int(a.split('-')[0])
