@@ -1,5 +1,5 @@
 def main():
-    with open("input.txt","r") as fp:
+    with open("test.txt","r") as fp:
         total = 0
         index = 1
         while True:
