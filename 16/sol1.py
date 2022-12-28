@@ -14,8 +14,12 @@ def main():
         for l in lines:
             for i in l.split(' ')[9:]:
                 valves[l.split(' ')[1]].addConnection(valves[i[0:2]])
-    for i in valves:
-        valves[i].printInfo()
+    currentValve = valves['AA']
+    timeRemain = timeLimit
+    for i in currentValve.getConnection():
+        #print('Name:',i.getName(),'Value:',(timeRemain-moveTime*1-openTime)*i.getFlow())
+        #i. NOTE I think i'll be done
+        pass
 #Thoughts:
 # A Valves flow value is related to when it was opened as flow * timeRemain.
 # To open the valve you are standing at it takes 1 minute so you would calculate flow value as (timeRemain-1*0-1)*flow
@@ -30,12 +34,28 @@ class Valve:
     name = ''
     flow = 0
     connections = []
+    openStatus = False
+    distances = {}
     def __init__(self, name, flow):
         self.name = name
         self.flow = flow
         self.connections = []
+        self.distances = {self.name:0}
     def addConnection(self, conn):
         self.connections.append(conn)
+        self.distances[conn.getName()] = 1
+    def addDistance(self, conn, dis):
+        if conn.getName() not in self.distances:
+            self.distances[conn.getName()] = dis
+            return True
+        else:
+            return False
+    def getConnection(self):
+        return self.connections
+    def getFlow(self):
+        return int(self.flow)
+    def getName(self):
+        return str(self.name)
     def printInfo(self):
         print("Main Valve: ",end='')
         print("Name",self.name,"| Flow",self.flow)
@@ -44,6 +64,10 @@ class Valve:
             i.printBasicInfo()
     def printBasicInfo(self):
         print("\tName",self.name,"| Flow",self.flow)
+    def getOpenStatus(self):
+        return self.openStatus
+    def setOpenStatus(self):
+        self.openStatus = True
     
 
 if __name__=="__main__":
